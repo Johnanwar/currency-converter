@@ -1,0 +1,11 @@
+@function rem($value, $base) {
+    @if type-of($value) == "number" {
+      @return ($value / $base) * 1rem;
+    } 
+  }
+  @mixin trim($lines) {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }

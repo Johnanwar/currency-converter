@@ -1,0 +1,23 @@
+.currency-converter-container{
+    background: #acb8ae;
+    width: 180px;
+    margin: 0 auto 20px;
+    display: grid;
+    grid-template-columns: 100px 80px;
+    border-radius: 15px;
+    input,select{
+        background: none;
+        border:0;
+        color:#000;
+    }
+    input{
+        padding-right: 10px;
+    }
+    select{
+        padding: 15px;
+        option{
+            color: #000;
+        }
+    }
+}
+
