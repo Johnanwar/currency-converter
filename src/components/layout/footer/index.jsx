@@ -2,7 +2,9 @@ import React from 'react';
 
 function Footer() {
   return (
-    <div>index</div>
+    <footer>
+      All rights reserved @John Anwar
+    </footer>
   );
 }
 

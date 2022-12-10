@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getlatestcurrencies, getconvertCurrencies } from '../api-sdk/redux/actions/currency.actions';
 import CurrencyConverter from '../components/currencyInupt';
 import swap from '../assets/images/transfer.svg';
+import TableDetails from '../components/tableDetails';
 
 function Home() {
   const [objData, setObjData] = useState({
-    amount1: 0,
+    amount1: '',
     amount2: 0,
     currency1: 'USD',
     currency2: 'EUR',
@@ -184,8 +185,7 @@ function Home() {
     ZMW: 'Zambian Kwacha',
     ZWL: 'Zimbabwean Dollar',
   };
-  const allCurrency = useSelector((state) => state?.allCurrency?.allCurrency);
-  console.log(allCurrency);
+  const allCurrency = useSelector((state) => state?.allCurrency);
   const dispatch = useDispatch();
   // useEffect(() => {
   //   dispatch(getlatestcurrencies());
@@ -205,7 +205,7 @@ function Home() {
     setObjData({
       currency1: toCurrency,
       currency2: fromCurrency,
-      amount1: 0,
+      amount1: '',
       amount2: 0,
     });
   };
@@ -230,26 +230,31 @@ function Home() {
   }
 
   return (
-    <div className="convert-container">
-      <img onClick={handleSwap} src={swap} alt="swap" title="swap currencies" />
-      <div>
-        <CurrencyConverter
-          onAmountChange={handleAmount1Change}
-          onCurrencyChange={handleCurrency1Change}
-          currencies={Object.keys(currencies) || allCurrency}
-          amount={objData.amount1}
-          currency={objData.currency1}
-        />
-        <CurrencyConverter
-          onCurrencyChange={handleCurrency2Change}
-          currencies={Object.keys(currencies) || allCurrency}
-          amount={objData.amount2}
-          currency={objData.currency2}
-          disabled
-        />
+    <section className="home">
+      <div className="convert-container">
+        <img onClick={handleSwap} src={swap} alt="swap" title="swap currencies" />
+        <div>
+          <CurrencyConverter
+            onAmountChange={handleAmount1Change}
+            onCurrencyChange={handleCurrency1Change}
+            currencies={Object.keys(currencies) || allCurrency?.allCurrency}
+            amount={objData.amount1}
+            currency={objData.currency1}
+          />
+          <CurrencyConverter
+            onCurrencyChange={handleCurrency2Change}
+            currencies={Object.keys(currencies) || allCurrency?.allCurrency}
+            amount={objData.amount2}
+            currency={objData.currency2}
+            disabled
+          />
+        </div>
+        <button disabled={objData.amount1 === '' || objData.amount1 < 1} onClick={handleConvert} className="convert" type="button">Convert</button>
       </div>
-      <button onClick={handleConvert} className="convert" type="button">Convert</button>
-    </div>
+      {allCurrency?.transactions && allCurrency?.transactions?.length > 0
+
+        ? <TableDetails data={allCurrency?.transactions} /> : ''}
+    </section>
   );
 }
 
